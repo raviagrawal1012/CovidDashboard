@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<style>
+    body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+
+    .fixed-header,
+    .fixed-footer {
+        width: 100%;
+        position: fixed;
+        background: #333;
+        padding: 10px 0;
+        color: #fff;
+    }
+
+    .fixed-header {
+        top: 0;
+    }
+
+    .fixed-footer {
+        bottom: 0;
+    }
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        /* Center the DIV horizontally */
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 7px 25px;
+        display: inline-block;
+    }
+</style>
+
+<body>
+    <div class="fixed-header">
+        <div class>
+            <nav>
+                <a href="/"><span style="font-size: 40px;">COVID-19 DashBoard</span></a>
+            </nav>
+        </div>
+    </div>
+    <div class="col-lg-3" style="float: left; max-height:650px; max-width:400px; overflow: scroll; overflow-x: hidden;">
+        <div><h1>Total Infected Count : {{totalCount}}</h1></div>
+        <div class="col-lg-12" style="float:left;">
+            <div class="col-lg-4" style="float:left;">
+                {%for con in countryNames%}
+                <input type="submit" value={{con}} name="countryName" style="width: 100px;"><br>
+                {% endfor %}
+            </div>
+            <div class = "col-lg-8" style = "float:left;">
+                <canvas id="myChart" width="250px" height="4200px"></canvas>
+            </div>
+        </div>
+    </div> 
+    <div class="col-lg-6"></div>
+    <div class="col-lg-3"></div>
+
+
+</body>
+<script>
+    var ctx = document.getElementById('myChart');
+    var chartOptions = {
+        legend: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                barPercentage: 1
+            }],
+            yAxes: [
+                // {barPercentage: 1},
+                // {gridLines:{drawBorder: false}},
+                { ticks: { display: false } },
+                // {ticks: {mirror: true}},
+                { display: false },
+
+            ],
+            elements: {
+                rectangle: {
+                    borderSkipped: 'left',
+                }
+            }
+        }
+    };
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: {{ countryNames| safe}},
+    datasets: [{
+        label: 'Latest Infected Count',
+        data: {{ barPlotVals | safe}},
+        backgroundColor: 'rgba(255, 99, 132)',
+        borderColor: 'rgba(255, 99, 132)',
+        borderWidth: 1
+        }]
+    },
+    options: chartOptions
+});
+</script>
+
+</html>
