@@ -1,8 +1,9 @@
 from django.shortcuts import render
 import pandas as pd
 
+
 # Create your views here.
-df3=pd.read_json('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/world-population-density.json')
+df3=pd.read_json("F:/mapchart.json")
 
 def index(request):
     url="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"

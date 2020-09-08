@@ -1,199 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script src="https://code.highcharts.com/maps/highmaps.js"></script>
-<script src="https://code.highcharts.com/maps/modules/data.js"></script>
-<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
-<script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
-<link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
+    <!DOCTYPE html>
+    <html lang="en">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+    <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
 
-<style>
-    body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-    }
+    <style>
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
 
-    .fixed-header,
-    .fixed-footer {
-        width: 100%;
-        position: fixed;
-        background: #333;
-        padding: 10px 0;
-        color: #fff;
-    }
+        .fixed-header,
+        .fixed-footer {
+            width: 100%;
+            position: fixed;
+            background: #333;
+            padding: 10px 0;
+            color: #fff;
+        }
 
-    .fixed-header {
-        top: 0;
-    }
+        .fixed-header {
+            top: 0;
+        }
 
-    .fixed-footer {
-        bottom: 0;
-    }
+        .fixed-footer {
+            bottom: 0;
+        }
 
-    .container {
-        width: 80%;
-        margin: 0 auto;
-        /* Center the DIV horizontally */
-    }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            /* Center the DIV horizontally */
+        }
 
-    nav a {
-        color: #fff;
-        text-decoration: none;
-        padding: 7px 25px;
-        display: inline-block;
-    }
-</style>
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 7px 25px;
+            display: inline-block;
+        }
+    </style>
 
-<body>
-    <div class="fixed-header">
-        <div class>
-            <nav>
-                <a href="/"><span style="font-size: 40px;">COVID-19 DashBoard</span></a>
-            </nav>
-        </div>
-    </div>
-
-    <div class="col-lg-8 ">
-        <br>
-        <br>
-        <br>
-            <div id="mapChart" style="height: 600px; width: 1000px; float:left ;"></div>
-        </div>
-    <div class="col-lg-4" style="float: right; max-height:650px; max-width:500px; overflow: scroll; overflow-x: hidden; ">
-        <div><h1>Total Infected Count : {{totalCount}}</h1></div>
-        <div class="col-lg-12" style="float:left;">
-            <div class="col-lg-4" style="float:left;">
-                {%for con in countryNames%}
-                <input type="submit" value={{con}} name="countryName" style="width: 90px;"><br>
-                {% endfor %}
-            </div>
-            <div class = "col-lg-8" style = "float:right;">
-                <canvas id="myChart" width="330px" height="4200px"></canvas>
+    <body>
+        <div class="fixed-header">
+            <div class>
+                <nav>
+                    <a href="/"><span style="font-size: 40px;">COVID-19 DashBoard</span></a>
+                </nav>
             </div>
         </div>
-    </div>
 
-    <!-- <div class="col-lg-3"></div> -->
+        <div class="col-lg-7 ">
+            <br>
+            <div id="mapChart" style="height: 600px; width: 800px; float:left ; position : fixed"></div>
+        </div>
+        <div class="col-lg-5" style="float: right; max-height:650px; max-width:380px; overflow: scroll; overflow-x: hidden; ">
+            <div><h1>Total Infected Count : {{totalCount}}</h1></div>
+            <div class="col-lg-12" style="float:left;">
+                <div class="col-lg-4" style="float:left;">
+                    {%for con in countryNames%}
+                    <input type="submit" value={{con}} name="countryName" style="width: 90px;"><br>
+                    {% endfor %}
+                </div>
+                <div class = "col-lg-8" style = "float:right;">
+                    <canvas id="myChart" width="250px" height="4200px"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="col-lg-3"></div> -->
 
 
-</body>
-<script>
-    var ctx = document.getElementById('myChart');
-    var chartOptions = {
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                barPercentage: 1
-            }],
-            yAxes: [
-                // {barPercentage: 1},
-                // {gridLines:{drawBorder: false}},
-                { ticks: { display: false } },
-                // {ticks: {mirror: true}},
-                { display: false },
+    </body>
+    <script>
+        var ctx = document.getElementById('myChart');
+        var chartOptions = {
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    barPercentage: 1
+                }],
+                yAxes: [
+                    // {barPercentage: 1},
+                    // {gridLines:{drawBorder: false}},
+                    { ticks: { display: false } },
+                    // {ticks: {mirror: true}},
+                    { display: false },
 
-            ],
-            elements: {
-                rectangle: {
-                    borderSkipped: 'left',
+                ],
+                elements: {
+                    rectangle: {
+                        borderSkipped: 'left',
+                    }
                 }
             }
-        }
-    };
-    var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: {{ countryNames| safe}},
-    datasets: [{
-        label: 'Latest Infected Count',
-        data: {{ barPlotVals | safe}},
-        backgroundColor: 'rgba(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132)',
-        borderWidth: 1
-        }]
-    },
-    options: chartOptions
-});
-</script>
-
-<script>
-    var data2={{dataForMap | safe}};
-    Highcharts.getJSON('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/world-population-density.json', function (data) {
-
-        // Prevent logarithmic errors in color calulcation
-        data.forEach(function (p) {
-            p.value = (p.value < 1 ? 1 : p.value);
-        });
-
-        // Initiate the chart
-        Highcharts.mapChart('mapChart', {
-
-            chart: {
-                map: 'custom/world'
-            },
-
-            title: {
-                text: 'World Map COVID-19 Infection '
-            },
-
-            legend: {
-                title: {
-                    text: 'Infected Population',
-                    style: {
-                        color: ( // theme
-                            Highcharts.defaultOptions &&
-                            Highcharts.defaultOptions.legend &&
-                            Highcharts.defaultOptions.legend.title &&
-                            Highcharts.defaultOptions.legend.title.style &&
-                            Highcharts.defaultOptions.legend.title.style.color
-                        ) || 'black'
-                    }
-                }
-            },
-
-            mapNavigation: {
-                enabled: true,
-                buttonOptions: {
-                    verticalAlign: 'top'
-                }
-            },
-
-            tooltip: {
-                backgroundColor: 'none',
-                borderWidth: 0,
-                shadow: false,
-                useHTML: true,
-                padding: 0,
-                pointFormat: '<span class="f32"><span class="flag {point.properties.hc-key}">' +
-                    '</span></span> {point.name}<br>' +'<span><h4>{point.value}</h4></span>',
-                positioner: function () {
-                    return { x: 0, y: 250 };
-                }
-            },
-
-            colorAxis: {
-                min: 1,
-                max: 1000,
-                type: 'logarithmic'
-            },
-
-            series: [{
-                data: data2,
-                joinBy: ['iso-a3', 'code3'],
-                name: 'Infected Counts',
-                states: {
-                    hover: {
-                        color: '#a4edba'
-                    }
-                }
+        };
+        var myChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: {{ countryNames| safe}},
+        datasets: [{
+            label: 'Latest Infected Count',
+            data: {{ barPlotVals | safe}},
+            backgroundColor: 'rgba(255, 99, 132)',
+            borderColor: 'rgba(255, 99, 132)',
+            borderWidth: 1
             }]
-        });
-        });
-</script>
+        },
+        options: chartOptions
+    });
+    </script>
 
-</html>
+    <script>
+        var data2={{dataForMap | safe}};
+        Highcharts.getJSON('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/world-population-density.json', function (data) {
 
-<!-- Checking git integration -->
+            // Prevent logarithmic errors in color calulcation
+            data.forEach(function (p) {
+                p.value = (p.value < 1 ? 1 : p.value);
+            });
+
+            // Initiate the chart
+            Highcharts.mapChart('mapChart', {
+
+                chart: {
+                    map: 'custom/world'
+                },
+
+                title: {
+                    text: 'World Map COVID-19 Infection '
+                },
+
+                legend: {
+                    title: {
+                        text: 'Infected Population',
+                        style: {
+                            color: ( // theme
+                                Highcharts.defaultOptions &&
+                                Highcharts.defaultOptions.legend &&
+                                Highcharts.defaultOptions.legend.title &&
+                                Highcharts.defaultOptions.legend.title.style &&
+                                Highcharts.defaultOptions.legend.title.style.color
+                            ) || 'black'
+                        }
+                    }
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'top'
+                    }
+                },
+
+                tooltip: {
+                    backgroundColor: 'none',
+                    borderWidth: 0,
+                    shadow: false,
+                    useHTML: true,
+                    padding: 0,
+                    pointFormat: '<span class="f32"><span class="flag {point.properties.hc-key}">' +
+                        '</span></span> {point.name}<br>' +'<span><h4>{point.value}</h4></span>',
+                    positioner: function () {
+                        return { x: 0, y: 250 };
+                    }
+                },
+
+                colorAxis: {
+                    min: 1,
+                    max: 1000,
+                    type: 'logarithmic'
+                },
+
+                series: [{
+                    data: data2,
+                    joinBy: ['iso-a3', 'code3'],
+                    name: 'Infected Counts',
+                    states: {
+                        hover: {
+                            color: '#a4edba'
+                        }
+                    }
+                }]
+            });
+            });
+    </script>
+
+    </html>
+
+    <!-- Checking git integration -->
