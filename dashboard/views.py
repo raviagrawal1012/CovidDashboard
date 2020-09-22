@@ -33,3 +33,16 @@ def mapDataCal(barPlotData,countryNames):
         except:
             pass
     return dataForMap
+
+def india(request):
+    latestIndList = IndTable()
+    context = {'latestIndList' : latestIndList}
+    return render(request,'India.html',context)
+
+def IndTable():
+    india = pd.read_csv("https://api.covid19india.org/csv/latest/states.csv")
+    latestInd = india[-36:]
+    latestInd=latestInd.sort_values(by='Confirmed',ascending=False)
+    
+    latestIndList = latestInd.values.tolist()
+    return latestIndList
