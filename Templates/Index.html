@@ -64,7 +64,11 @@
                 <div class="col-lg-4" style="float:left;">
                 <form action="India.html">
                     {%for con in countryNames%}
-                    <input type="submit" value={{con}} name="countryName" style="width: 90px;"><br>
+                        {%if con == 'India'%}
+                            <input type="submit" value={{con}} name="countryName" style="width: 90px;"><br>
+                        {%else%}
+                            <input type="button" value={{con}} name="countryName" style="width: 90px"><br>
+                        {%endif%}
                     {% endfor %}
                 </form>
                 </div>
