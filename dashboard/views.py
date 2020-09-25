@@ -35,9 +35,9 @@ def mapDataCal(barPlotData,countryNames):
     return dataForMap
 
 def india(request):
-    latestIndList,latestInd = IndTable()
+    latestIndList,latestInd,date,confirmed = IndTable()
     lst = indiaValue(latestInd)
-    context = {'latestIndList' : latestIndList,'lst':lst}
+    context = {'latestIndList' : latestIndList,'lst':lst,'date' : date, 'confirmed' : confirmed}
     return render(request,'India.html',context)
 
 def IndTable():
@@ -45,7 +45,11 @@ def IndTable():
     latestInd = india[-36:]
     latestInd=latestInd.sort_values(by='Confirmed',ascending=False)
     latestIndList = latestInd.values.tolist()
-    return latestIndList,latestInd
+    date = latestIndList[0][0]
+    confirmed = latestIndList[0][2]
+    latestInd = latestInd[-35:]
+    latestIndList = latestInd.values.tolist()
+    return latestIndList,latestInd,date,confirmed
 
 def indiaValue(latestInd):
     indiaList =latestInd['State'].values.tolist()
