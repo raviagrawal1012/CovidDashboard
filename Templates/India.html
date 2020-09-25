@@ -16,16 +16,37 @@
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid #fcfafa;
   }
+th{
+    color:#fcfafa;
+    background: #a19d9d;
+    position: sticky;
+    top: 0;
+    padding: 10px;
+}
 
-tr:hover {background-color:#C0C0C0;}
+td{
+    color: #383737;
+    padding:5px;
+    font-size: larger;
+}
+tr:hover {background-color:#ebe8e8;
+    
+}
 
 </style>
-
-<div id="container" style= "height : 700px; width : 900px"></div>
-<table style="width:100%; text-align : center">
-    <tr>
+<br/>
+<br/>
+<br/>
+<div id="container" style= "height : 900px; width : 2000px"></div>
+<br/>
+<br/>
+<br/>
+<table style="width:70%; text-align : center; font-family:
+'Palatino Linotype', 'Book Antiqua', Palatino, serif; font-weight:bolder; position:relative; margin-left: auto;
+    margin-right: auto;">
+    <tr style="font-size:x-large;color:#1b6196">
       <th>State</th>
       <th>Confirmed</th>
       <th>Recovered</th>
@@ -45,6 +66,7 @@ tr:hover {background-color:#C0C0C0;}
     {% endfor %}
 
 </table>
+
 <script>
 // Prepare demo data
 // Data is joined to map using value of 'hc-key' property by default.
@@ -60,12 +82,12 @@ Highcharts.mapChart('container', {
     },
 
     title: {
-        text: 'Highmaps basic demo'
+        text: 'INDIA'
     },
 
-    subtitle: {
+    /* subtitle: {
         text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/in/in-all.js">India</a>'
-    },
+    },*/
 
     mapNavigation: {
         enabled: true,
